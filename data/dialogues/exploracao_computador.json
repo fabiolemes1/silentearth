@@ -1,0 +1,90 @@
+[
+    {
+        "speaker": "Cout",
+        "portrait": "cout.png",
+        "bg": "computador_senha.png",
+        "text": "O computador está ativo… mas parece bloqueado. Tem um painel pedindo alguma espécie de palavra secreta.",
+        "next": 1
+    },
+
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "computador_senha.png",
+        "text": "Uma palavra secreta? Para quê alguém esconderia informações atrás de um código?",
+        "next": 2
+    },
+
+    {
+        "speaker": "Gevet",
+        "portrait": "gevet.png",
+        "bg": "computador_senha.png",
+        "text": "Isso é estranho… Em Vask nunca usamos nada parecido. Dados sempre foram abertos a todos.",
+        "next": 3
+    },
+
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "computador_senha.png",
+        "text": "Talvez a civilização daqui protegesse seus equipamentos. Como se tivessem medo de que outros acessassem.",
+        "next": 4
+    },
+
+    {
+        "speaker": "Cout",
+        "portrait": "cout.png",
+        "bg": "computador_senha.png",
+        "text": "Medo… de outros roubarem informações? Estranho. Nunca tinha visto antes.",
+        "next": 5
+    },
+
+    {
+        "speaker": "Gevet",
+        "portrait": "gevet.png",
+        "bg": "computador_senha.png",
+        "text": "Os sensores indicam que este planeta tinha conflitos internos antes do impacto. Talvez a segurança aqui fosse algo essencial para sobreviver.",
+        "next": 6
+    },
+
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "computador_senha.png",
+        "text": "Seja como for, não vamos conseguir acesso a este computador sem aprender como essas… ‘senhas’ funcionam.",
+        "next": 7
+    },
+
+    {
+        "speaker": "Cout",
+        "portrait": "cout.png",
+        "bg": "computador_senha.png",
+        "text": "Então a resposta está aqui fora. Em algum lugar entre esses destroços.",
+        "next": 8
+    },
+
+    {
+        "speaker": "Gevet",
+        "portrait": "gevet.png",
+        "bg": "computador_senha.png",
+        "text": "Vamos procurar por documentos ou registros. Alguém deve ter anotado algo antes do impacto.",
+        "next": 9
+    },
+
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "computador_senha.png",
+        "text": "Perfeito. Qualquer informação pode nos ajudar a entender como desbloquear isso.",
+        "next": 10
+    },
+
+    {
+        "speaker": "Cout",
+        "portrait": "cout.png",
+        "bg": "computador_senha.png",
+        "text": "Vamos dividir a busca. Precisamos descobrir como esse povo protegia seus segredos.",
+        "action": "voltar_para_exploracao",
+        "next": "END"
+    }
+]

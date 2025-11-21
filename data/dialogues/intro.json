@@ -1,0 +1,122 @@
+[
+  {
+    "speaker": "Gevet",
+    "text": "Atenção, leitura estabilizando… Não há dúvidas agora. Há um corpo planetário inteiro logo abaixo de nós. É enorme.",
+    "portrait": "gevet.png",
+    "bg": "gevet.png",
+    "next": 1
+  },
+
+  {
+    "speaker": "Garden",
+    "text": "Incrível… jamais vi algo assim. Camadas, oceanos, estruturas… Como isso esteve fora dos nossos sensores por tanto tempo?",
+    "portrait": "garden.png",
+    "bg": "garden.png",
+    "next": 2
+  },
+
+  {
+    "speaker": "Cout",
+    "text": "Talvez nunca esteve. Talvez nós é que nunca buscamos tão longe. Mas este planeta é diferente, aparentemente ele se chama Terra, porém não há nada além de silêncio.",
+    "portrait": "cout.png",
+    "bg": "cout.png",
+    "next": 3
+  },
+
+  {
+    "speaker": "Gevet",
+    "text": "Silêncio é pouco. Os níveis de energia são quase mortos, mas… há resíduos tecnológicos por toda a crosta. Como se alguém tivesse vivido aqui — e desaparecido.",
+    "portrait": "gevet.png",
+    "bg": "gevet.png",
+    "next": 4
+  },
+
+  {
+    "speaker": "Garden",
+    "text": "Algum tipo de extinção? Será que houve algo que conseguiu destruir esse planeta por completo?",
+    "portrait": "garden.png",
+    "bg": "garden.png",
+    "next": 5
+  },
+
+  {
+    "speaker": "Gevet",
+    "text": "Não sei o que houve, mas consigo detectar fragmentos metálicos na superfície, são muito antigos e não há dúvida de que houve algum sinal de vida nesse planeta.",
+    "portrait": "gevet.png",
+    "bg": "gevet.png",
+    "next": 6
+  },
+
+  {
+    "speaker": "Garden",
+    "text": "Então havia vida inteligente aqui… mas não o bastante para sobreviver ao que aconteceu.",
+    "portrait": "garden.png",
+    "bg": "garden.png",
+    "next": 7
+  },
+
+  {
+    "speaker": "Cout",
+    "text": "Prepare a descida. Se este planeta morreu, quero saber por quê.",
+    "portrait": "cout.png",
+    "bg": "cout.png",
+    "next": 8
+  },
+
+  {
+    "speaker": "CUTSCENE",
+    "text": "",
+    "bg": "foguete_descendo.png",
+    "next": 9
+  },
+
+  {
+    "speaker": "Cout",
+    "text": "Olha o tamanho dessa cratera, isso não é uma cratera comum. Parece que o impacto arrancou quilômetros da superfície.",
+    "portrait": "cout_janela.png",
+    "bg": "cout_janela.png",
+    "next": 10
+  },
+
+  {
+    "speaker": "Garden",
+    "text": "Como um planeta inteiro continuaria existindo após um impacto desse tamanho?",
+    "portrait": "garden_janela.png",
+    "bg": "garden_janela.png",
+    "next": 11
+  },
+
+  {
+    "speaker": "Gevet",
+    "text": "Os sensores detectam vida vegetal abundante… mas zero sinais de inteligência, essa cratera pode ter a ver com o desparecimento de vida.",
+    "portrait": "gevet_janela.png",
+    "bg": "gevet_janela.png",
+    "next": 12
+  },
+
+  {
+    "speaker": "Gevet",
+    "text": "Esperem… recebemos um eco, parece um padrão repetido, tem alguma coisa emitindo sinal...",
+    "portrait": "gevet_janela.png",
+    "bg": "gevet_janela.png",
+    "next": 13
+  },
+
+  {
+    "speaker": "Garden",
+    "text": "Um sinal? Comunicação?",
+    "portrait": "garden_janela.png",
+    "bg": "garden_janela.png",
+    "next": 14
+  },
+
+  {
+    "speaker": "Cout",
+    "text": "Seja o que for… é antigo. E ainda está tentando nos alcançar. Desça a nave. Seremos testemunhas.",
+    "portrait": "cout_janela.png",
+    "bg": "cout_janela.png",
+    "action": "start_landing",
+    "next": "cutscene_descida"
+}
+
+]
