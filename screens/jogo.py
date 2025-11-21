@@ -1,16 +1,17 @@
-# screens/jogo.py
-from ui.utils import fade, draw_text_button
+from screens.minigame_password import MinigamePassword
+from ui.utils import fade
 
-def screen_jogo(state, screen, click_once):
-    w,h = screen.get_width(), screen.get_height()
-    font = state["font"]
+def screen_jogo(state, screen, click_once, events):
+    w, h = screen.get_width(), screen.get_height()
+    
+    # Initialize minigame if not present
+    if "minigame" not in state:
+        state["minigame"] = MinigamePassword(state)
 
-    screen.fill((0,0,20))
-    t = font.render("Início do Jogo - Parte 1: A descoberta do computador do FBI...", True, (255,255,255))
-    screen.blit(t, (w//2 - t.get_width()//2, h//2))
+    # Update and Draw Minigame
+    minigame = state["minigame"]
+    minigame.handle_input(events)
+    minigame.draw(screen)
 
-    if draw_text_button(screen, "MENU", w*0.05, h*0.05, w*0.12, h*0.07, click_once, font):
-        state["current"] = "menu"
-        state["fade"] = 255
-
-    state["fade"] = fade(screen, w, h, state["fade"])
+    # Fade effect (optional, keeping it if desired, but usually terminal is crisp)
+    # state["fade"] = fade(screen, w, h, state["fade"])

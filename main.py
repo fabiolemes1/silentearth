@@ -118,7 +118,8 @@ clock = pygame.time.Clock()
 
 while True:
     click_once = False
-    for ev in pygame.event.get():
+    events = pygame.event.get()
+    for ev in events:
         if ev.type == pygame.QUIT:
             pygame.quit(); sys.exit()
 
@@ -129,7 +130,9 @@ while True:
             if ev.key == pygame.K_F11:
                 toggle_fullscreen()
             if ev.key == pygame.K_ESCAPE:
-                pygame.quit(); sys.exit()
+                # Only quit if not in a minigame that uses ESC
+                if state["current"] not in ["desktop", "alien_input"]:
+                    pygame.quit(); sys.exit()
 
     if state["current"] == "menu":
         screen_menu(state, screen, assets, buttons, click_once)
@@ -138,7 +141,22 @@ while True:
     elif state["current"] == "creditos":
         screen_creditos(state, screen, click_once)
     elif state["current"] == "jogo":
-        screen_jogo(state, screen, click_once)
+        screen_jogo(state, screen, click_once, events)
+    elif state["current"] == "desktop":
+        # Initialize desktop if needed (lazy load or pre-load)
+        if "desktop" not in state:
+            from screens.minigame_desktop import MinigameDesktop
+            state["desktop"] = MinigameDesktop(state)
+        
+        state["desktop"].handle_input(events)
+        state["desktop"].draw(screen)
+    elif state["current"] == "alien_input":
+        if "alien_input" not in state:
+            from screens.alien_input import AlienInput
+            state["alien_input"] = AlienInput(state)
+        
+        state["alien_input"].handle_input(events)
+        state["alien_input"].draw(screen)
 
     pygame.display.flip()
     clock.tick(60)
