@@ -47,3 +47,18 @@ def draw_slider(screen, x, y, w, h, value, click_once):
         new_value = (mx - x) / w
 
     return max(0, min(1, new_value))
+
+def wrap_text(text, font, max_width):
+    words = text.split(" ")
+    lines = []
+    current = ""
+
+    for word in words:
+        test = current + word + " "
+        if font.size(test)[0] <= max_width:
+            current = test
+        else:
+            lines.append(current)
+            current = word + " "
+    lines.append(current)
+    return lines

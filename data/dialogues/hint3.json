@@ -1,0 +1,13 @@
+[
+    {
+        "speaker": "LEMBRETE DE SEGURANÇA",
+        "text": "PARA: Todos os funcionários\nDE: Admin\n\nDevido ao estresse recente, muitos estão esquecendo suas senhas.",
+        "bg": "mapa_exploracao.png"
+    },
+    {
+        "speaker": "LEMBRETE DE SEGURANÇA",
+        "text": "A senha mestre foi redefinida para a causa do nosso fim.\n (7 letras)",
+        "bg": "mapa_exploracao.png",
+        "next": "END"
+    }
+]

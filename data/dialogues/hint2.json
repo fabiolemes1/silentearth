@@ -1,0 +1,13 @@
+[
+    {
+        "speaker": "DIÁRIO DE BORDO",
+        "text": "O pânico tomou conta das ruas. O governo declarou lei marcial.\nEles dizem que as naves de fuga são seguras, mas eu vi os testes...",
+        "bg": "mapa_exploracao.png"
+    },
+    {
+        "speaker": "DIÁRIO DE BORDO",
+        "text": "Deus nos ajude. Se alguém encontrar isso... saiba que tentamos.",
+        "bg": "mapa_exploracao.png",
+        "next": "END"
+    }
+]

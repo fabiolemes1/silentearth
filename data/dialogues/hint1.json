@@ -1,0 +1,13 @@
+[
+    {
+        "speaker": "DOCUMENTO",
+        "text": "RELATÓRIO DE RASTREAMENTO - PROJETO LAST HOPE\n\nObjeto: Meteoro X-99\nTrajetória: Rota de colisão confirmada.\nProbabilidade de impacto: 99.9%\nTempo estimado: 48 horas.",
+        "bg": "mapa_exploracao.png"
+    },
+    {
+        "speaker": "DOCUMENTO",
+        "text": "Não há mais nada que possamos fazer. A evacuação é nossa única chance.",
+        "bg": "mapa_exploracao.png",
+        "next": "END"
+    }
+]

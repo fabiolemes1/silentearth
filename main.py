@@ -15,6 +15,8 @@ from screens.intro_story import IntroStory
 from screens.intro_scene import IntroScene
 from screens.exploracao import ExploracaoScreen
 from screens.cutscene_descida import CutsceneDescida
+from screens.minigame_password import MinigamePassword
+from screens.minigame_desktop import MinigameDesktop
 
 from screens.dialogue import DialogueScreen
 from ui.button import Button
@@ -95,6 +97,10 @@ cutscene_descida = CutsceneDescida(screen, LARGURA, ALTURA, ASSETS_PATH)
 exploracao = None
 exploracao_dialogo = None
 exploracao_computador = None
+post_password_dialogue = None
+minigame_password = None
+minigame_desktop = None
+hint_dialogue = None
 
 
 # =====================================================================
@@ -172,7 +178,8 @@ clock = pygame.time.Clock()
 while True:
     click_once = False
 
-    for ev in pygame.event.get():
+    events = pygame.event.get()
+    for ev in events:
         if ev.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
@@ -184,8 +191,10 @@ while True:
             if ev.key == pygame.K_F11:
                 toggle_fullscreen()
             if ev.key == pygame.K_ESCAPE:
-                pygame.quit()
-                sys.exit()
+                # Só sai do jogo se não estiver em um minigame que usa ESC para voltar
+                if state["current"] not in ["minigame_password", "minigame_desktop"]:
+                    pygame.quit()
+                    sys.exit()
 
     # =================================================================
     # ESTADOS DO JOGO
@@ -246,7 +255,9 @@ while True:
 
         if click_once:
             action = exploracao.click()
-            if action == "abrir_dialogo_computador":
+            if action == "abrir_minigame_senha":
+                set_state("minigame_password")
+            elif action == "abrir_dialogo_computador":
                 exploracao_dialogo = DialogueScreen(
                     screen,
                     state["font"],
@@ -255,6 +266,17 @@ while True:
                     "exploracao_computador.json"
                 )
                 set_state("exploracao_dialogo")
+            
+            elif action and action.startswith("abrir_documento_"):
+                doc_id = action.split("_")[-1] # 1, 2 or 3
+                hint_dialogue = DialogueScreen(
+                    screen,
+                    state["font"],
+                    DIALOGUE_PATH,
+                    ASSETS_PATH,
+                    f"hint{doc_id}.json"
+                )
+                set_state("hint_dialogue")
 
     elif state["current"] == "exploracao_dialogo":
         exploracao_dialogo.update()
@@ -265,6 +287,64 @@ while True:
 
             if action == "END":
                 exploracao.liberar_documentos()
+                set_state("exploracao")
+
+    elif state["current"] == "hint_dialogue":
+        hint_dialogue.update()
+        hint_dialogue.draw()
+        
+        if click_once:
+            action = hint_dialogue.click()
+            if action == "END":
+                set_state("exploracao")
+
+    elif state["current"] == "minigame_password":
+        if minigame_password is None:
+            minigame_password = MinigamePassword(screen, state["font"])
+        
+        # Update logic
+        result = minigame_password.update()
+        if result == "success":
+            post_password_dialogue = DialogueScreen(
+                screen,
+                state["font"],
+                DIALOGUE_PATH,
+                ASSETS_PATH,
+                "post_password.json"
+            )
+            set_state("post_password_dialogue")
+        
+        # Draw
+        minigame_password.draw()
+        
+        # Event handling
+        for ev in events:
+            action = minigame_password.handle_event(ev)
+            if action == "exit":
+                set_state("exploracao")
+
+    elif state["current"] == "post_password_dialogue":
+        post_password_dialogue.update()
+        post_password_dialogue.draw()
+        
+        if click_once:
+            action = post_password_dialogue.click()
+            if action == "END":
+                set_state("minigame_desktop")
+
+    elif state["current"] == "minigame_desktop":
+        if minigame_desktop is None:
+            minigame_desktop = MinigameDesktop(screen, state["font"], ASSETS_PATH)
+            
+        minigame_desktop.update()
+        minigame_desktop.draw()
+        
+        if click_once:
+            minigame_desktop.click()
+            
+        for ev in events:
+            action = minigame_desktop.handle_event(ev)
+            if action == "exit":
                 set_state("exploracao")
 
 

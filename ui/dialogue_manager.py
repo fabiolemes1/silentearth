@@ -2,20 +2,7 @@ import pygame
 import json
 import os
 
-def wrap_text(text, font, max_width):
-    words = text.split(" ")
-    lines = []
-    current = ""
-
-    for word in words:
-        test = current + word + " "
-        if font.size(test)[0] <= max_width:
-            current = test
-        else:
-            lines.append(current)
-            current = word + " "
-    lines.append(current)
-    return lines
+from ui.utils import wrap_text
 
 
 class DialogueManager:

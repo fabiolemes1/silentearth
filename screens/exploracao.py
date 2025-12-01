@@ -116,6 +116,8 @@ class ExploracaoScreen:
         # Clique no computador
         if self.computador_rect.collidepoint((mx, my)):
             self.beep.stop()
+            if self.docs_liberados:
+                return "abrir_minigame_senha"
             return "abrir_dialogo_computador"
 
         # Clique nos documentos (somente depois do diálogo)
