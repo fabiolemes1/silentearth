@@ -1,0 +1,44 @@
+[
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "desktop_bg.png",
+        "text": "O que é isso? Parece um monte de letras aleatórias...",
+        "next": 1
+    },
+    {
+        "speaker": "Gevet",
+        "portrait": "gevet.png",
+        "bg": "desktop_bg.png",
+        "text": "Criptografia. Uma técnica primitiva, mas eficaz para esconder informações.",
+        "next": 2
+    },
+    {
+        "speaker": "Cout",
+        "portrait": "cout.png",
+        "bg": "desktop_bg.png",
+        "text": "Olhem o nome do arquivo: 'COORDENADAS_BUNKER'. Deve ser importante.",
+        "next": 3
+    },
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "desktop_bg.png",
+        "text": "Mas como vamos ler isso? 'KHOO ZRUOG'? Não faz sentido.",
+        "next": 4
+    },
+    {
+        "speaker": "Gevet",
+        "portrait": "gevet.png",
+        "bg": "desktop_bg.png",
+        "text": "Precisamos de uma chave. Ou talvez... uma dica. Havia outro arquivo na área de trabalho?",
+        "next": 5
+    },
+    {
+        "speaker": "Cout",
+        "portrait": "cout.png",
+        "bg": "desktop_bg.png",
+        "text": "Sim, 'LEMBRETE.txt'. Talvez tenha algo lá.",
+        "next": "END"
+    }
+]

@@ -74,8 +74,9 @@ class DialogueManager:
         nxt = self.current.get("next", None)
 
         # Fim
+        # Fim
         if nxt == "END":
-            return "END"
+            return action if action else "END"
 
         # Se for índice
         if isinstance(nxt, int):

@@ -1,12 +1,18 @@
 import pygame
 import os
 from ui.utils import wrap_text
+from ui.dialogue_manager import DialogueManager
 
 class MinigameDesktop:
-    def __init__(self, screen, font, assets_path):
+    def __init__(self, screen, font, assets_path, dialogue_path):
         self.screen = screen
         self.font = font
         self.assets_path = assets_path
+        self.dialogue_path = dialogue_path
+        
+        self.dialogue_manager = DialogueManager(screen, font, assets_path, dialogue_path)
+        self.showing_dialogue = False
+        self.dialogue_shown = False
         
         self.W = screen.get_width()
         self.H = screen.get_height()
@@ -28,11 +34,13 @@ class MinigameDesktop:
         # Icons setup
         self.icons = [
             {"name": "COORDENADAS_BUNKER.txt", "icon": "icon_file", "rect": pygame.Rect(50, 50, 64, 64)},
-            {"name": "LEMBRETE_SENHA.txt", "icon": "icon_file", "rect": pygame.Rect(50, 180, 64, 64)},
+            {"name": "LEMBRETE.txt", "icon": "icon_file", "rect": pygame.Rect(50, 180, 64, 64)},
             {"name": "LIXEIRA", "icon": "icon_trash", "rect": pygame.Rect(50, 310, 64, 64)}
         ]
         
         self.windows = [] # List of open windows
+        self.current_shift = 0 # For decoder
+        self.encrypted_text = "DWHQÇDR: R EXQNHU HVWD QRV FRRUGHQDGDV 78.66, -45.88"
         
     def _load_asset(self, key, filename):
         path = os.path.join(self.assets_path, filename)
@@ -50,7 +58,8 @@ class MinigameDesktop:
             self.assets[key] = None
 
     def update(self):
-        pass
+        if self.showing_dialogue:
+            self.dialogue_manager.update()
 
     def draw(self):
         # 1. Desktop Background
@@ -97,11 +106,20 @@ class MinigameDesktop:
         if self.assets["monitor_border"]:
             self.screen.blit(self.assets["monitor_border"], (0, 0))
 
+        # 6. Dialogue Overlay
+        if self.showing_dialogue:
+            self.dialogue_manager.draw_textbox()
+
     def draw_window(self, win):
         # Window Frame
         pygame.draw.rect(self.screen, self.WINDOW_BG, win["rect"])
         pygame.draw.rect(self.screen, (0, 0, 0), win["rect"], 2)
         
+        # Special handling for DECODER
+        if win.get("type") == "DECODER":
+            self.draw_decoder_window(win)
+            return
+
         # Title Bar
         title_bar = pygame.Rect(win["rect"].x, win["rect"].y, win["rect"].width, 30)
         pygame.draw.rect(self.screen, self.TITLE_BAR_COLOR, title_bar)
@@ -127,7 +145,109 @@ class MinigameDesktop:
             self.screen.blit(line_surf, (content_rect.x + 10, y_offset))
             y_offset += line_surf.get_height() + 5
 
+    def draw_decoder_window(self, win):
+        # Title Bar
+        title_bar = pygame.Rect(win["rect"].x, win["rect"].y, win["rect"].width, 30)
+        pygame.draw.rect(self.screen, self.TITLE_BAR_COLOR, title_bar)
+        
+        title_txt = self.font.render("DECODIFICADOR DE TEXTO", True, (255, 255, 255))
+        self.screen.blit(title_txt, (win["rect"].x + 10, win["rect"].y + 5))
+        
+        # Close Button
+        close_btn = pygame.Rect(win["rect"].right - 25, win["rect"].y + 5, 20, 20)
+        pygame.draw.rect(self.screen, (192, 192, 192), close_btn)
+        pygame.draw.line(self.screen, (0,0,0), close_btn.topleft, close_btn.bottomright)
+        pygame.draw.line(self.screen, (0,0,0), close_btn.bottomleft, close_btn.topright)
+        
+        # Content Area
+        content_rect = pygame.Rect(win["rect"].x + 10, win["rect"].y + 40, win["rect"].width - 20, win["rect"].height - 50)
+        pygame.draw.rect(self.screen, (240, 240, 240), content_rect)
+        
+        # 1. Encrypted Text Display
+        enc_label = self.font.render("TEXTO CIFRADO:", True, (100, 100, 100))
+        self.screen.blit(enc_label, (content_rect.x + 10, content_rect.y + 10))
+        
+        enc_lines = wrap_text(self.encrypted_text, self.font, content_rect.width - 20)
+        y = content_rect.y + 35
+        for line in enc_lines:
+            surf = self.font.render(line, True, (0, 0, 0))
+            self.screen.blit(surf, (content_rect.x + 10, y))
+            y += surf.get_height() + 2
+            
+        # Separator
+        y += 20
+        pygame.draw.line(self.screen, (150, 150, 150), (content_rect.x + 10, y), (content_rect.right - 10, y))
+        y += 20
+        
+        # 2. Controls (Shift Selector)
+        ctrl_y = y
+        shift_label = self.font.render(f"DESLOCAMENTO: {self.current_shift}", True, (0, 0, 0))
+        self.screen.blit(shift_label, (content_rect.centerx - shift_label.get_width()//2, ctrl_y))
+        
+        # Buttons [-] and [+]
+        btn_w = 40
+        btn_h = 40
+        self.btn_minus = pygame.Rect(content_rect.centerx - 80, ctrl_y + 30, btn_w, btn_h)
+        self.btn_plus = pygame.Rect(content_rect.centerx + 40, ctrl_y + 30, btn_w, btn_h)
+        
+        pygame.draw.rect(self.screen, (200, 200, 200), self.btn_minus)
+        pygame.draw.rect(self.screen, (0, 0, 0), self.btn_minus, 2)
+        minus_txt = self.font.render("-", True, (0, 0, 0))
+        self.screen.blit(minus_txt, (self.btn_minus.centerx - minus_txt.get_width()//2, self.btn_minus.centery - minus_txt.get_height()//2))
+        
+        pygame.draw.rect(self.screen, (200, 200, 200), self.btn_plus)
+        pygame.draw.rect(self.screen, (0, 0, 0), self.btn_plus, 2)
+        plus_txt = self.font.render("+", True, (0, 0, 0))
+        self.screen.blit(plus_txt, (self.btn_plus.centerx - plus_txt.get_width()//2, self.btn_plus.centery - plus_txt.get_height()//2))
+        
+        y = ctrl_y + 90
+        
+        # 3. Decoded Text Preview
+        dec_label = self.font.render("VISUALIZAÇÃO:", True, (100, 100, 100))
+        self.screen.blit(dec_label, (content_rect.x + 10, y))
+        
+        decoded = self.caesar_cipher(self.encrypted_text, -self.current_shift)
+        dec_lines = wrap_text(decoded, self.font, content_rect.width - 20)
+        y += 25
+        for line in dec_lines:
+            # Highlight if correct
+            color = (0, 100, 0) if self.current_shift == 3 else (100, 0, 0)
+            surf = self.font.render(line, True, color)
+            self.screen.blit(surf, (content_rect.x + 10, y))
+            y += surf.get_height() + 2
+            
+        # 4. Confirm Button
+        y += 20
+        self.btn_confirm = pygame.Rect(content_rect.centerx - 60, content_rect.bottom - 50, 120, 40)
+        pygame.draw.rect(self.screen, (0, 120, 0), self.btn_confirm)
+        pygame.draw.rect(self.screen, (0, 0, 0), self.btn_confirm, 2)
+        conf_txt = self.font.render("CONFIRMAR", True, (255, 255, 255))
+        self.screen.blit(conf_txt, (self.btn_confirm.centerx - conf_txt.get_width()//2, self.btn_confirm.centery - conf_txt.get_height()//2))
+
+    def caesar_cipher(self, text, shift):
+        result = ""
+        for char in text:
+            if char.isalpha():
+                # Determine ASCII offset (65 for 'A', 97 for 'a')
+                offset = 65 if char.isupper() else 97
+                # Apply shift
+                result += chr((ord(char) - offset + shift) % 26 + offset)
+            elif char.isdigit():
+                # Shift digits too as per previous plan
+                result += str((int(char) + shift) % 10)
+            else:
+                result += char
+        return result
+
     def click(self):
+        if self.showing_dialogue:
+            action = self.dialogue_manager.click()
+            if action == "END" or action == "success":
+                self.showing_dialogue = False
+                if action == "success":
+                    return "success"
+            return
+
         mx, my = pygame.mouse.get_pos()
         
         # Check windows (top to bottom)
@@ -146,8 +266,21 @@ class MinigameDesktop:
                 self.windows.append(self.windows.pop(i))
                 return
                 
-            # Click inside window (consume click)
+            # Click inside window
             if win["rect"].collidepoint((mx, my)):
+                if win.get("type") == "DECODER":
+                    # Handle Decoder Buttons
+                    if hasattr(self, "btn_minus") and self.btn_minus.collidepoint((mx, my)):
+                        self.current_shift = (self.current_shift - 1) % 26
+                    elif hasattr(self, "btn_plus") and self.btn_plus.collidepoint((mx, my)):
+                        self.current_shift = (self.current_shift + 1) % 26
+                    elif hasattr(self, "btn_confirm") and self.btn_confirm.collidepoint((mx, my)):
+                        if self.current_shift == 3:
+                            # Success!
+                            self.dialogue_manager.load_dialogue("decoding_success.json")
+                            self.showing_dialogue = True
+                            # Close window to clean up view? Or keep it?
+                            # Let's keep it open so they see the result while talking
                 return
 
         # Check icons
@@ -160,26 +293,36 @@ class MinigameDesktop:
         title = name
         
         if name == "COORDENADAS_BUNKER.txt":
-            content = "MENSAGEM CRIPTOGRAFADA:\n\nKHOO ZRUOG -> HELLO WORLD\n\nCOORDENADAS: 45.33, -12.55\n\n(Use a Cifra de César com deslocamento 3 para decifrar a mensagem real se necessário, mas as coordenadas já estão visíveis aqui para facilitar o teste.)"
-        elif name == "LEMBRETE_SENHA.txt":
+            content = "" # Handled by draw_decoder_window
+            title = "DECODIFICADOR"
+            # Trigger dialogue only once
+            if not self.dialogue_shown:
+                self.dialogue_manager.load_dialogue("encrypted_message.json")
+                self.showing_dialogue = True
+                self.dialogue_shown = True
+        elif name == "LEMBRETE.txt":
             content = "Lembrete: O General César adorava o número 3.\n\nIsso deve ser útil para decifrar os arquivos criptografados do sistema."
         elif name == "LIXEIRA":
             content = "A lixeira está vazia."
             
         # Center the window
         win_w = int(self.W * 0.8)
-        win_h = int(self.H * 0.7)
+        win_h = int(self.H * 0.8) # Taller for decoder
         win_x = (self.W - win_w) // 2
         win_y = (self.H - win_h) // 2
         
         new_window = {
             "title": title,
             "rect": pygame.Rect(win_x, win_y, win_w, win_h),
-            "content": content
+            "content": content,
+            "type": "DECODER" if name == "COORDENADAS_BUNKER.txt" else "NORMAL"
         }
         self.windows.append(new_window)
 
     def handle_event(self, event):
+        if self.showing_dialogue:
+            return None
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 return "exit"

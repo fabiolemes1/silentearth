@@ -285,7 +285,7 @@ while True:
         if click_once:
             action = exploracao_dialogo.click()
 
-            if action == "END":
+            if action == "END" or action == "voltar_para_exploracao":
                 exploracao.liberar_documentos()
                 set_state("exploracao")
 
@@ -334,7 +334,7 @@ while True:
 
     elif state["current"] == "minigame_desktop":
         if minigame_desktop is None:
-            minigame_desktop = MinigameDesktop(screen, state["font"], ASSETS_PATH)
+            minigame_desktop = MinigameDesktop(screen, state["font"], ASSETS_PATH, DIALOGUE_PATH)
             
         minigame_desktop.update()
         minigame_desktop.draw()
@@ -346,6 +346,9 @@ while True:
             action = minigame_desktop.handle_event(ev)
             if action == "exit":
                 set_state("exploracao")
+            elif action == "success":
+                print("MINIGAME COMPLETED! COORDINATES ACCEPTED.")
+                set_state("exploracao") # Placeholder for now, or maybe end game?
 
 
     elif state["current"] == "opcoes":

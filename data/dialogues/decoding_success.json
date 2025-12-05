@@ -1,0 +1,31 @@
+[
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "desktop_bg.png",
+        "text": "Consegui! A mensagem faz sentido agora.",
+        "next": 1
+    },
+    {
+        "speaker": "Cout",
+        "portrait": "cout.png",
+        "bg": "desktop_bg.png",
+        "text": "'ATENÇÃO: O BUNKER ESTA NOS COORDENADAS 45.33, -12.55'.",
+        "next": 2
+    },
+    {
+        "speaker": "Gevet",
+        "portrait": "gevet.png",
+        "bg": "desktop_bg.png",
+        "text": "Essas coordenadas... não estão longe daqui. Devemos encontrar mais pistas por lá.",
+        "next": 3
+    },
+    {
+        "speaker": "Garden",
+        "portrait": "garden.png",
+        "bg": "desktop_bg.png",
+        "text": "Então é para lá que vamos. Preparem-se.",
+        "action": "success",
+        "next": "END"
+    }
+]
