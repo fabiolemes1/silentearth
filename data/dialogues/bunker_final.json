@@ -1,0 +1,23 @@
+[
+    {
+        "speaker": "Relatório Final",
+        "text": "O bunker está abandonado. Silêncio absoluto. Apenas ecos do passado.",
+        "bg": "bunker_bg.png"
+    },
+    {
+        "speaker": "Nave Negra",
+        "text": "Este foguete... não é para nós. Ele foi usado para evacuação. Alguém fugiu daqui.",
+        "bg": "bunker_bg.png"
+    },
+    {
+        "speaker": "Gevet",
+        "text": "Mas para onde todos foram? Por que nunca mais houve sinal? O que aconteceu após o impacto?",
+        "bg": "bunker_bg.png"
+    },
+    {
+        "speaker": "Cout",
+        "text": "Seja quem estava aqui... fugiu antes do fim. Talvez exista algo lá fora. Alguém lá fora.",
+        "next": "END",
+        "bg": "bunker_bg.png"
+    }
+]

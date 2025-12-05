@@ -1,13 +1,27 @@
 [
     {
-        "speaker": "DOCUMENTO",
-        "text": "RELATÓRIO DE RASTREAMENTO - PROJETO LAST HOPE\n\nObjeto: Meteoro X-99\nTrajetória: Rota de colisão confirmada.\nProbabilidade de impacto: 99.9%\nTempo estimado: 48 horas.",
-        "bg": "mapa_exploracao.png"
+        "speaker": "Documento",
+        "text": "ARQUIVO RECUPERADO — 'Segurança Digital: Fundamentos'\n\nÀ medida que nossa sociedade cresceu conectada, percebemos algo assustador: o maior ponto fraco não eram as máquinas, e sim as pessoas."
     },
     {
-        "speaker": "DOCUMENTO",
-        "text": "Não há mais nada que possamos fazer. A evacuação é nossa única chance.",
-        "bg": "mapa_exploracao.png",
+        "speaker": "Documento",
+        "text": "Cybersegurança se tornou a arte de proteger dados, sistemas e identidades.\n\nO primeiro erro comum era simples: **senhas fracas**."
+    },
+    {
+        "speaker": "Documento",
+        "text": "Frases óbvias como '12345', 'senha', 'admin' e datas de aniversário davam acesso total a computadores, contas bancárias e até armamentos militares."
+    },
+    {
+        "speaker": "Documento",
+        "text": "Quanto mais previsível a senha, mais fácil para invasores assumirem o controle.\n\nPara combater isso, surgiram protocolos de criação segura:"
+    },
+    {
+        "speaker": "Documento",
+        "text": "- Senhas longas (mínimo 8–10 caracteres)\n- Mistura de maiúsculas, minúsculas, números e símbolos\n- Nada relacionado à vida pessoal\n- Troca periódica"
+    },
+    {
+        "speaker": "Documento",
+        "text": "Mas mesmo com regras, as pessoas continuavam escolhendo palavras simples.\nA criatividade humana era sempre o elo fraco da segurança.",
         "next": "END"
     }
 ]

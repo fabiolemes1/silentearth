@@ -19,11 +19,15 @@ from screens.minigame_password import MinigamePassword
 from screens.minigame_desktop import MinigameDesktop
 
 from screens.dialogue import DialogueScreen
+from screens.bunker import BunkerScreen
+from screens.bunker2 import BunkerScreen2
+from screens.bunker3 import BunkerScreen3
+from screens.ending import EndingScreen
+
 from ui.button import Button
 
 pygame.init()
 pygame.mixer.init()
-
 
 # =====================================================================
 # CONFIGURAÇÃO BÁSICA DA TELA
@@ -35,7 +39,6 @@ FONT = pygame.font.SysFont("consolas", max(18, int(ALTURA * 0.035)))
 ASSETS_PATH = os.path.join(os.getcwd(), "assets")
 DIALOGUE_PATH = os.path.join(os.getcwd(), "data", "dialogues")
 
-
 # =====================================================================
 # FUNÇÃO PARA CARREGAR IMAGENS
 # =====================================================================
@@ -44,7 +47,6 @@ def load_and_scale(name, scale=None):
     if scale:
         img = pygame.transform.smoothscale(img, scale)
     return img
-
 
 # =====================================================================
 # CARREGAR TODOS OS ASSETS
@@ -78,13 +80,9 @@ def load_assets():
     assets["mute"] = load_and_scale("icon_mute.png", (50, 50))
     assets["unmute"] = load_and_scale("icon_unmute.png", (50, 50))
 
-    # cutscene foguete (descida)
-    # já será controlada pela CutsceneDescida
     return assets
 
-
 assets = load_assets()
-
 
 # =====================================================================
 # INSTÂNCIAS INICIAIS
@@ -96,12 +94,15 @@ cutscene_descida = CutsceneDescida(screen, LARGURA, ALTURA, ASSETS_PATH)
 
 exploracao = None
 exploracao_dialogo = None
-exploracao_computador = None
 post_password_dialogue = None
 minigame_password = None
 minigame_desktop = None
 hint_dialogue = None
 
+bunker1 = None
+bunker2 = None
+bunker3 = None
+ending_screen = None
 
 # =====================================================================
 # BOTÕES DO MENU
@@ -116,9 +117,7 @@ def create_menu_buttons():
                            lambda: set_state("creditos"))
     }
 
-
 buttons = create_menu_buttons()
-
 
 # =====================================================================
 # MÚSICA DO MENU
@@ -129,7 +128,6 @@ try:
     pygame.mixer.music.play(-1)
 except:
     print("⚠ Música não encontrada.")
-
 
 # =====================================================================
 # ESTADO GLOBAL
@@ -142,11 +140,9 @@ state = {
     "muted": False
 }
 
-
 def set_state(new_state):
     state["current"] = new_state
     state["fade"] = 255
-
 
 # =====================================================================
 # FULLSCREEN
@@ -154,9 +150,11 @@ def set_state(new_state):
 def toggle_fullscreen():
     global screen, LARGURA, ALTURA, FONT, assets, buttons
     global dialogue_intro, intro_story, intro_scene, cutscene_descida
+    global exploracao, post_password_dialogue, minigame_password, minigame_desktop
+    global bunker1, bunker2, bunker3, ending_screen
 
-    FULLSCREEN = not FULLSCREEN
-    screen, LARGURA, ALTURA = create_screen(FULLSCREEN)
+    FULLSCREEN_FLAG = not FULLSCREEN  # não mexe na constante, mas se quiser pode guardar em outro lugar
+    screen, LARGURA, ALTURA = create_screen(FULLSCREEN_FLAG)
 
     FONT = pygame.font.SysFont("consolas", max(18, int(ALTURA * 0.035)))
     state["font"] = FONT
@@ -169,6 +167,14 @@ def toggle_fullscreen():
     intro_scene = IntroScene(screen, LARGURA, ALTURA, ASSETS_PATH)
     cutscene_descida = CutsceneDescida(screen, LARGURA, ALTURA, ASSETS_PATH)
 
+    exploracao = None
+    post_password_dialogue = None
+    minigame_password = None
+    minigame_desktop = None
+    bunker1 = None
+    bunker2 = None
+    bunker3 = None
+    ending_screen = None
 
 # =====================================================================
 # LOOP PRINCIPAL
@@ -191,7 +197,7 @@ while True:
             if ev.key == pygame.K_F11:
                 toggle_fullscreen()
             if ev.key == pygame.K_ESCAPE:
-                # Só sai do jogo se não estiver em um minigame que usa ESC para voltar
+                # ESC não fecha o jogo se estiver em minigame
                 if state["current"] not in ["minigame_password", "minigame_desktop"]:
                     pygame.quit()
                     sys.exit()
@@ -235,7 +241,6 @@ while True:
     elif state["current"] == "cutscene_descida":
         result = cutscene_descida.update()
 
-        # SE A CUTSCENE ACABOU, NÃO CHAMA draw()
         if result == "end_cutscene":
             set_state("exploracao")
             exploracao = None
@@ -244,11 +249,9 @@ while True:
 
         cutscene_descida.draw()
 
-
     elif state["current"] == "exploracao":
         if exploracao is None:
             exploracao = ExploracaoScreen(screen, assets, state, ASSETS_PATH)
-
 
         exploracao.update()
         exploracao.draw()
@@ -257,6 +260,7 @@ while True:
             action = exploracao.click()
             if action == "abrir_minigame_senha":
                 set_state("minigame_password")
+
             elif action == "abrir_dialogo_computador":
                 exploracao_dialogo = DialogueScreen(
                     screen,
@@ -266,9 +270,9 @@ while True:
                     "exploracao_computador.json"
                 )
                 set_state("exploracao_dialogo")
-            
+
             elif action and action.startswith("abrir_documento_"):
-                doc_id = action.split("_")[-1] # 1, 2 or 3
+                doc_id = action.split("_")[-1]  # 1, 2 ou 3
                 hint_dialogue = DialogueScreen(
                     screen,
                     state["font"],
@@ -284,15 +288,15 @@ while True:
 
         if click_once:
             action = exploracao_dialogo.click()
-
             if action == "END" or action == "voltar_para_exploracao":
-                exploracao.liberar_documentos()
+                if exploracao:
+                    exploracao.liberar_documentos()
                 set_state("exploracao")
 
     elif state["current"] == "hint_dialogue":
         hint_dialogue.update()
         hint_dialogue.draw()
-        
+
         if click_once:
             action = hint_dialogue.click()
             if action == "END":
@@ -312,44 +316,108 @@ while True:
                 ASSETS_PATH,
                 "post_password.json"
             )
+            minigame_password = None  # limpa o minigame
             set_state("post_password_dialogue")
-        
-        # Draw
-        minigame_password.draw()
-        
-        # Event handling
-        for ev in events:
-            action = minigame_password.handle_event(ev)
-            if action == "exit":
-                set_state("exploracao")
+        else:
+            # Só desenha e trata evento enquanto ainda está no minigame
+            minigame_password.draw()
+            
+            for ev in events:
+                action = minigame_password.handle_event(ev)
+                if action == "exit":
+                    minigame_password = None
+                    set_state("exploracao")
+
 
     elif state["current"] == "post_password_dialogue":
         post_password_dialogue.update()
         post_password_dialogue.draw()
-        
+
         if click_once:
             action = post_password_dialogue.click()
             if action == "END":
                 set_state("minigame_desktop")
 
     elif state["current"] == "minigame_desktop":
+        # Garante que o minigame existe
         if minigame_desktop is None:
             minigame_desktop = MinigameDesktop(screen, state["font"], ASSETS_PATH, DIALOGUE_PATH)
             
+        # Atualiza e desenha o "desktop"
         minigame_desktop.update()
         minigame_desktop.draw()
         
-        if click_once:
-            minigame_desktop.click()
-            
+        # Primeiro trata eventos de teclado (ESC para sair)
         for ev in events:
             action = minigame_desktop.handle_event(ev)
             if action == "exit":
+                minigame_desktop = None
                 set_state("exploracao")
-            elif action == "success":
-                print("MINIGAME COMPLETED! COORDINATES ACCEPTED.")
-                set_state("exploracao") # Placeholder for now, or maybe end game?
+                # já trocou de tela, não faz mais nada neste frame
+                break
+        
+        # Se ainda estamos no minigame_desktop, trata o clique do mouse
+        if state["current"] == "minigame_desktop" and click_once:
+            result = minigame_desktop.click()
+            
+            if result == "success":
+                # Sucesso no decodificador → ir para o bunker
+                minigame_desktop = None
+                set_state("bunker1")
 
+
+
+    elif state["current"] == "bunker1":
+        if bunker1 is None:
+            bunker1 = BunkerScreen(screen, state["font"], ASSETS_PATH, DIALOGUE_PATH)
+
+        keys = pygame.key.get_pressed()
+        result = bunker1.update(keys)
+        bunker1.draw()
+
+        if result == "complete":
+            bunker2 = None
+            set_state("bunker2")
+
+    elif state["current"] == "bunker2":
+        if bunker2 is None:
+            bunker2 = BunkerScreen2(screen, state["font"], ASSETS_PATH, DIALOGUE_PATH)
+
+        keys = pygame.key.get_pressed()
+        result = bunker2.update(keys)
+        bunker2.draw()
+
+        if result == "complete":
+            bunker3 = None
+            set_state("bunker3")
+
+    elif state["current"] == "bunker3":
+        if bunker3 is None:
+            bunker3 = BunkerScreen3(screen, state["font"], ASSETS_PATH, DIALOGUE_PATH)
+
+        keys = pygame.key.get_pressed()
+        result = bunker3.update(keys)
+        bunker3.draw()
+
+        if result == "complete":
+            ending_screen = None
+            set_state("ending")
+
+    elif state["current"] == "ending":
+        if ending_screen is None:
+            ending_screen = EndingScreen(screen, state["font"])
+
+        ending_screen.update()
+        ending_screen.draw()
+
+        if click_once:
+            action = ending_screen.click()
+            if action == "menu":
+                # resetar algumas coisas se quiser
+                bunker1 = bunker2 = bunker3 = None
+                minigame_password = None
+                minigame_desktop = None
+                set_state("menu")
 
     elif state["current"] == "opcoes":
         screen_opcoes(state, screen, assets, click_once)

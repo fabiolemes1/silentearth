@@ -1,13 +1,38 @@
 [
-    {
-        "speaker": "LEMBRETE DE SEGURANÇA",
-        "text": "PARA: Todos os funcionários\nDE: Admin\n\nDevido ao estresse recente, muitos estão esquecendo suas senhas.",
-        "bg": "mapa_exploracao.png"
-    },
-    {
-        "speaker": "LEMBRETE DE SEGURANÇA",
-        "text": "A senha mestre foi redefinida para a causa do nosso fim.\n (7 letras)",
-        "bg": "mapa_exploracao.png",
-        "next": "END"
-    }
+  {
+    "speaker": "Arquivo Recuperado — HINT 3",
+    "text": "Registro avançado: \"A mente é o verdadeiro campo de batalha\".",
+    "bg": "computador_senha.png"
+  },
+  {
+    "speaker": "Relatório Psicológico",
+    "text": "Engenharia Social era considerada a arma mais poderosa. Não atacava máquinas — atacava pessoas. Se alguém pudesse ser enganado a revelar uma senha, não importava quantas barreiras tecnológicas existissem.",
+    "bg": "computador_senha.png"
+  },
+  {
+    "speaker": "Relatório Psicológico",
+    "text": "Hackers fingiam ser colegas, chefes, autoridades. Enviavam mensagens falsas, criavam páginas idênticas a sistemas reais. Um clique inocente — e todo o sistema estava comprometido.",
+    "bg": "computador_senha.png"
+  },
+  {
+    "speaker": "Instrutor Militar",
+    "text": "Para memorizar senhas, os humanos criavam padrões. Datas importantes. Palavras curtas. Nomes sentimentais. Quanto mais previsível o pensamento, mais fácil quebrá-lo.",
+    "bg": "computador_senha.png"
+  },
+  {
+    "speaker": "Enigma Final",
+    "text": "No dia que o céu caiu, uma única palavra foi repetida entre testemunhas. O fenômeno que trouxe fogo e destruição ao planeta. Algo que cruzou o espaço e mudou tudo para sempre.",
+    "bg": "computador_senha.png"
+  },
+  {
+    "speaker": "Sussurro Digital",
+    "text": "A senha é o que rasgou os céus.\nAquele que trouxe o fim.\nA palavra gravada na história humana:",
+    "bg": "computador_senha.png"
+  },
+  {
+    "speaker": "???",
+    "text": "\"METEORO\"",
+    "next": "END",
+    "bg": "computador_senha.png"
+  }
 ]

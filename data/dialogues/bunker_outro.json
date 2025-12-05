@@ -1,0 +1,42 @@
+[
+  {
+    "speaker": "Garden",
+    "text": "Então este é o tal bunker... e o foguete ainda está aqui.",
+    "next": 1
+  },
+  {
+    "speaker": "Gevet",
+    "text": "Os registros ao redor indicam que ele já foi usado. Parece que houve múltiplos lançamentos antes de tudo isso desabar.",
+    "next": 2
+  },
+  {
+    "speaker": "Cout",
+    "text": "Ou seja... este lugar não era apenas um abrigo. Era um ponto de evacuação.",
+    "next": 3
+  },
+  {
+    "speaker": "Garden",
+    "text": "Faz sentido. Se sabiam que o impacto era inevitável, a única saída era fugir do próprio planeta.",
+    "next": 4
+  },
+  {
+    "speaker": "Gevet",
+    "text": "Mas depois disso não há mais registros. Nenhum sinal claro de para onde foram, nem se chegaram ao destino.",
+    "next": 5
+  },
+  {
+    "speaker": "Cout",
+    "text": "Um foguete para longe de um mundo condenado... e nenhum rastro do que aconteceu depois.",
+    "next": 6
+  },
+  {
+    "speaker": "Garden",
+    "text": "Talvez o silêncio que sentimos aqui não seja o fim da história, só o trecho que foi deixado para trás.",
+    "next": 7
+  },
+  {
+    "speaker": "Cout",
+    "text": "Então seguimos. Se eles escaparam, em algum lugar do universo existe a continuação desta história.",
+    "next": "END"
+  }
+]

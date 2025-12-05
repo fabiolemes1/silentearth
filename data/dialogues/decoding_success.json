@@ -1,31 +1,39 @@
 [
-    {
-        "speaker": "Garden",
-        "portrait": "garden.png",
-        "bg": "desktop_bg.png",
-        "text": "Consegui! A mensagem faz sentido agora.",
-        "next": 1
-    },
-    {
-        "speaker": "Cout",
-        "portrait": "cout.png",
-        "bg": "desktop_bg.png",
-        "text": "'ATENÇÃO: O BUNKER ESTA NOS COORDENADAS 45.33, -12.55'.",
-        "next": 2
-    },
-    {
-        "speaker": "Gevet",
-        "portrait": "gevet.png",
-        "bg": "desktop_bg.png",
-        "text": "Essas coordenadas... não estão longe daqui. Devemos encontrar mais pistas por lá.",
-        "next": 3
-    },
-    {
-        "speaker": "Garden",
-        "portrait": "garden.png",
-        "bg": "desktop_bg.png",
-        "text": "Então é para lá que vamos. Preparem-se.",
-        "action": "success",
-        "next": "END"
-    }
+  {
+    "speaker": "Gevet",
+    "text": "Decodificação concluída. A mensagem estava cifrada usando um deslocamento de três letras.",
+    "bg": "desktop_bg.png",
+    "next": 1
+  },
+  {
+    "speaker": "Garden",
+    "text": "Então os humanos escondiam até coordenadas importantes atrás de códigos. Tudo para que apenas quem soubesse a chave conseguisse entender.",
+    "bg": "desktop_bg.png",
+    "next": 2
+  },
+  {
+    "speaker": "Cout",
+    "text": "As coordenadas indicam uma instalação subterrânea. Algo que eles chamavam de bunker.",
+    "bg": "desktop_bg.png",
+    "next": 3
+  },
+  {
+    "speaker": "Gevet",
+    "text": "Rota traçada. A área ao redor parece instável, mas o caminho até o local é viável.",
+    "bg": "desktop_bg.png",
+    "next": 4
+  },
+  {
+    "speaker": "Garden",
+    "text": "Se alguém tentou sobreviver a tudo isso, faz sentido que tenha começado em um lugar assim.",
+    "bg": "desktop_bg.png",
+    "next": 5
+  },
+  {
+    "speaker": "Cout",
+    "text": "Então é para lá que vamos. Preparem-se.",
+    "bg": "desktop_bg.png",
+    "action": "success",
+    "next": "END"
+  }
 ]

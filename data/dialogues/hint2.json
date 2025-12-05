@@ -1,13 +1,23 @@
 [
     {
-        "speaker": "DIÁRIO DE BORDO",
-        "text": "O pânico tomou conta das ruas. O governo declarou lei marcial.\nEles dizem que as naves de fuga são seguras, mas eu vi os testes...",
-        "bg": "mapa_exploracao.png"
+        "speaker": "Documento",
+        "text": "ARQUIVO RECUPERADO — 'A Falha Humana'\n\nHackers descobriram que não precisavam quebrar sistemas — bastava quebrar pessoas."
     },
     {
-        "speaker": "DIÁRIO DE BORDO",
-        "text": "Deus nos ajude. Se alguém encontrar isso... saiba que tentamos.",
-        "bg": "mapa_exploracao.png",
+        "speaker": "Documento",
+        "text": "Chamavam isso de **Engenharia Social**.\nEm vez de forçar uma senha, induziam o usuário a revelá-la."
+    },
+    {
+        "speaker": "Documento",
+        "text": "Um e-mail falso. Uma ligação urgente. Uma página idêntica à original.\n\nO humano confiava — e entregava a chave do cofre."
+    },
+    {
+        "speaker": "Documento",
+        "text": "Por isso, ensinava-se sempre:\n- Nunca compartilhar senhas\n- Desconfiar de pedidos urgentes demais\n- Jamais clicar em links desconhecidos\n- Verificar remetentes e endereços reais"
+    },
+    {
+        "speaker": "Documento",
+        "text": "Mesmo assim… bastava um descuido.\nUma única senha vazada podia destruir uma nação em minutos.",
         "next": "END"
     }
 ]
